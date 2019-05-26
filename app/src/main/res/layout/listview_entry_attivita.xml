@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/entryAttivita"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants"
+    >
+
+    <TextView
+        android:id="@+id/textViewPallino"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="10"
+        android:gravity="center"
+        android:text="●"
+        android:textColor="@color/colorAttivitaCompleta"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewNomeAttivita"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="30"
+        android:gravity="center"
+        android:text="NomeAttivita"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewTimer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="30"
+        android:gravity="center"
+        android:text="00:00:00"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/AttivitaEntryPlayPause"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="0dp"
+        android:layout_weight="10"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/music_player_play" />
+
+    <ImageButton
+        android:id="@+id/AttivitaEntryEdit"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="0dp"
+        android:layout_weight="10"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/edit" />
+
+    <ImageButton
+        android:id="@+id/AttivitaEntryDelete"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="0dp"
+        android:layout_weight="10"
+        android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/recycling_bin" />
+
+</LinearLayout>

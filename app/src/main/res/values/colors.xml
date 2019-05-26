@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#A2BCB9</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#75EA68</color>
+    <color name="colorAttivitaAttiva">#44E350</color>
+    <color name="colorAttivitaPausa">#656665</color>
+    <color name="colorAttivitaCompleta">#4D43E2</color>
+    <color name="colorFloadingButton">#B0ECE7</color>
+
+</resources>
