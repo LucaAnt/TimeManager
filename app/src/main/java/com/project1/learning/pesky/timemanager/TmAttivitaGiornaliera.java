@@ -1,5 +1,6 @@
 package com.project1.learning.pesky.timemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +16,6 @@ import com.project1.learning.pesky.timemanager.list_adapters.GiornataCorrenteAda
 import com.project1.learning.pesky.timemanager.model.Attivita;
 import com.project1.learning.pesky.timemanager.model.Giornata;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,9 +24,9 @@ import static com.project1.learning.pesky.timemanager.model.Attivita.Status.COMP
 import static com.project1.learning.pesky.timemanager.model.Attivita.Status.PAUSED;
 import static com.project1.learning.pesky.timemanager.model.Attivita.Status.RUNNING;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, GiornataCorrenteAdapter.TmAttivitaGiornalieraAdapterListener
+public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, GiornataCorrenteAdapter.TmAttivitaGiornalieraAdapterListener
 {
-    Giornata giornataDiProva;
+
     GiornataCorrenteAdapter giornataAdapter;
     private Timer timer;
     private TextView orarioLavorativo,orarioAttivitaTotale;
@@ -34,7 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.tm_attivita_giornaliera);
+
+        //Test Database
+        DB dbTmp = new DB();
 
         //Configura e Imposta la toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         orarioAttivitaTotale = (TextView) findViewById(R.id.textViewOrarioAttivitaTotale);
 
         //Instanzia una giornata dummy
-        giornataDiProva = new Giornata();
+
         /*
         giornataDiProva.newAttivita("Servizio Clienti");
         giornataDiProva.getCurrentAttivita().addDummyTranches();
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Fine giornata Dummy
 
         ListView listView = findViewById(R.id.ListViewAttivita);
-        giornataAdapter = new GiornataCorrenteAdapter(this, giornataDiProva.getAttivita(),this);
+        giornataAdapter = new GiornataCorrenteAdapter(this, DB.giornataCorrente.getAttivita(),this);
         listView.setAdapter(giornataAdapter);
         listView.setOnItemClickListener(this);
         findViewById(R.id.floatingActionButton).setOnClickListener(this);
@@ -83,9 +86,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timer.scheduleAtFixedRate(refreshTask, 0, 1000);
 
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (intent.getStringExtra(CostantiAttivita.STR_NEW_ATTIVITA)!=null)
+        {
+            DB.giornataCorrente.newAttivita(intent.getStringExtra(CostantiAttivita.STR_NEW_ATTIVITA));
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main_attivitagiornaliera, menu);
         return true;
     }
 
@@ -108,10 +122,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Intent intent ;
         switch (v.getId())
         {
             case R.id.floatingActionButton:
-                giornataDiProva.newAttivita("Dummy attivita "+giornataDiProva.getAttivita().size());
+                //giornataDiProva.newAttivita("Dummy attivita "+giornataDiProva.getAttivita().size());
+                intent = new Intent(this,TmNuovaAttivita.class);
+                startActivity(intent);
                 this.giornataAdapter.notifyDataSetChanged();
                 break;
             default:
@@ -130,14 +147,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void startStopAttivita(int modelEntryId)
     {
-        Attivita currAtt = this.giornataDiProva.getAttivita().get(modelEntryId);
+        Attivita currAtt = DB.giornataCorrente.getAttivita().get(modelEntryId);
         Attivita currentRunningAttivita;
 
 
         //Gestione della vecchia attivita
-        if (giornataDiProva.hasRuningAttivita())
+        if (DB.giornataCorrente.hasRuningAttivita())
         {
-            currentRunningAttivita = giornataDiProva.getCurrentRunningActivity();
+            currentRunningAttivita = DB.giornataCorrente.getCurrentRunningActivity();
             if (!currAtt.getNome().equals(currentRunningAttivita.getNome()))
             {   //Se il bottone playPause dell'attivita cliccata è un altro rispetto a quello dell'attivita correntemente in esecuzione impila la tranche e lo imposta a completato
                 currentRunningAttivita.pauseAttivita();
@@ -166,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }else{
             //Se non ci sono altre attività già in esecuzione starta direttamente  la nuova
-            giornataDiProva.completeAllActivity();
+            DB.giornataCorrente.completeAllActivity();
             currAtt.startAttivita();
             currAtt.status = RUNNING;
             }
@@ -178,22 +195,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void editAttivita(int modelEntryId)
     {
+        Intent intent = new Intent(this,TmModificaAttivita.class);
+        intent.putExtra(CostantiAttivita.INT_ID_ATTIVITA_DA_MODIFICARE,modelEntryId);
+        startActivity(intent);
         this.giornataAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void deleteeAttivita(int modelEntryId)
     {
-        this.giornataDiProva.getAttivita().remove(modelEntryId);
+        DB.giornataCorrente.getAttivita().remove(modelEntryId);
         this.giornataAdapter.notifyDataSetChanged();
         Toast.makeText(this,"Attivita cancellata " + modelEntryId,Toast.LENGTH_LONG).show();
     }
 
     public void refreshAll()
     {
-        this.giornataDiProva.refreshTotalTime();
-        orarioLavorativo.setText(getFormattedString(new Date ((new Date()).getTime() - this.giornataDiProva.getDataDiOggi().getTime())));
-        orarioAttivitaTotale.setText(getFormattedString(this.giornataDiProva.getTotalTime()));
+        DB.giornataCorrente.refreshTotalTime();
+        orarioLavorativo.setText(getFormattedString(new Date ((new Date()).getTime() - DB.giornataCorrente.getDataDiOggi().getTime())));
+        orarioAttivitaTotale.setText(getFormattedString(DB.giornataCorrente.getTotalTime()));
         this.giornataAdapter.notifyDataSetChanged();
     }
 
@@ -205,9 +225,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     class RefreshFieldsTimerTask extends TimerTask
     {
-        MainActivity context=null;
+        TmAttivitaGiornaliera context=null;
 
-        public RefreshFieldsTimerTask(MainActivity context) {
+        public RefreshFieldsTimerTask(TmAttivitaGiornaliera context) {
             this.context = context;
         }
 

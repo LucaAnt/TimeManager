@@ -14,6 +14,8 @@ public class Attivita {
     public Status status;
     Date tempoTotaleAttivita;
     private boolean runningTranche;
+
+
     public Attivita(String nome) {
         this.Nome = nome;
         status = Status.COMPLETED;
@@ -38,6 +40,11 @@ public class Attivita {
     public boolean hasRunningTranche() {
         return runningTranche;
     }
+
+    public List<Tranche> getTranches() {
+        return this.tranches;
+    }
+
 
     public void setDescrizione(String descrizione) {
         Descrizione = descrizione;
@@ -88,6 +95,12 @@ public class Attivita {
         tranches.add(Tranche.getDummyTranche());
         tranches.add(Tranche.getDummyTranche());
         this.status = Status.COMPLETED;
+    }
+
+    public void addManualTranche()
+    {
+        this.startAttivita();
+        this.pauseAttivita();
     }
 
 

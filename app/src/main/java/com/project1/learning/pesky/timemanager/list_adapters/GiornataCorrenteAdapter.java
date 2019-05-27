@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.project1.learning.pesky.timemanager.MainActivity;
+import com.project1.learning.pesky.timemanager.TmAttivitaGiornaliera;
 import com.project1.learning.pesky.timemanager.R;
 import com.project1.learning.pesky.timemanager.model.Attivita;
 import java.util.List;
@@ -63,7 +63,7 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
         nomeAttivita.setText(currentAttivita.getNome());
 
         TextView tempoTotaleAttivita = (TextView) listItem.findViewById(R.id.textViewTimer);
-        tempoTotaleAttivita.setText(MainActivity.getFormattedString(currentAttivita.getTempoTotaleAttivita()));
+        tempoTotaleAttivita.setText(TmAttivitaGiornaliera.getFormattedString(currentAttivita.getTempoTotaleAttivita()));
 
 
         //Gestione Bottoni interni
