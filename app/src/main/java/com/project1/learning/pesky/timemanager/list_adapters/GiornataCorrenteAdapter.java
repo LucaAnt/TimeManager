@@ -1,7 +1,6 @@
 package com.project1.learning.pesky.timemanager.list_adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +8,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.project1.learning.pesky.timemanager.MainActivity;
 import com.project1.learning.pesky.timemanager.R;
 import com.project1.learning.pesky.timemanager.model.Attivita;
-import java.util.Date;
 import java.util.List;
 
-import static com.project1.learning.pesky.timemanager.model.Attivita.Status.*;
 
 public class GiornataCorrenteAdapter extends ArrayAdapter
 {
     private Context mContext;
     private List<Attivita> attivitaList;
     TmAttivitaGiornalieraAdapterListener attivitaGiornalieraListener;
+    ImageButton  btnPlayPause;
+    View listItem;
+
 
     public GiornataCorrenteAdapter(Context context,List<Attivita> list,TmAttivitaGiornalieraAdapterListener attivitaGiornalieraListener)
     {
@@ -35,11 +34,11 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
 
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        View listItem = convertView;
+        listItem = convertView;
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.listview_entry_attivita,parent,false);
 
-        Attivita currentAttivita = attivitaList.get(position);
+        final Attivita currentAttivita = attivitaList.get(position);
 
         //Gestione pallino colorato
         TextView pallino = (TextView) listItem.findViewById(R.id.textViewPallino);
@@ -64,23 +63,21 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
         nomeAttivita.setText(currentAttivita.getNome());
 
         TextView tempoTotaleAttivita = (TextView) listItem.findViewById(R.id.textViewTimer);
-        Date dt = currentAttivita.getTempoTotale();
-        tempoTotaleAttivita.setText(MainActivity.getFormattedString(dt));
+        tempoTotaleAttivita.setText(MainActivity.getFormattedString(currentAttivita.getTempoTotaleAttivita()));
 
 
         //Gestione Bottoni interni
         //Bottone Play/Pause/Resume
-        ImageButton  btnPlayPause = listItem.findViewById(R.id.AttivitaEntryPlayPause);
+        btnPlayPause = listItem.findViewById(R.id.AttivitaEntryPlayPause);
         btnPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext,"Click Play/Pause on " + position,Toast.LENGTH_LONG).show();
                 attivitaGiornalieraListener.startStopAttivita(position);
-
             }
         });
 
-
+        //Gestione Dinamica Bottoni Play/Pause/Resume e label timer
         switch (currentAttivita.status)
         {
             case PAUSED:
@@ -93,8 +90,9 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
                 btnPlayPause.setImageResource(R.drawable.pause);
                 break;
             default:break;
-
         }
+
+
 
         ImageButton  btnEdit = listItem.findViewById(R.id.AttivitaEntryEdit);
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -129,4 +127,5 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
         public void editAttivita(int modelEntryId);
         public void deleteeAttivita(int modelEntryId);
     }
+
 }

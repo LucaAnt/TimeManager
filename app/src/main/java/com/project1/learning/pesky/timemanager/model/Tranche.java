@@ -10,10 +10,16 @@ public class Tranche {
         Start = new Date();
     }
 
+    public Tranche(Date start,Date end)
+    {
+        Start = start;
+        this.End = end;
+    }
     public void endTranche()
     {
         End = new Date();
     }
+
 
     public Date getStart() {
         return Start;

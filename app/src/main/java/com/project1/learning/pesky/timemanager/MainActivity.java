@@ -1,11 +1,8 @@
 package com.project1.learning.pesky.timemanager;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,13 +20,16 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.project1.learning.pesky.timemanager.model.Attivita.Status.COMPLETED;
+import static com.project1.learning.pesky.timemanager.model.Attivita.Status.PAUSED;
+import static com.project1.learning.pesky.timemanager.model.Attivita.Status.RUNNING;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, GiornataCorrenteAdapter.TmAttivitaGiornalieraAdapterListener
 {
     Giornata giornataDiProva;
     GiornataCorrenteAdapter giornataAdapter;
     private Timer timer;
     private TextView orarioLavorativo,orarioAttivitaTotale;
-    private boolean status = false;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -83,19 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timer.scheduleAtFixedRate(refreshTask, 0, 1000);
 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        this.status = true;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        this.status=false;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -144,31 +131,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void startStopAttivita(int modelEntryId)
     {
         Attivita currAtt = this.giornataDiProva.getAttivita().get(modelEntryId);
-        Attivita oldAtt =  giornataDiProva.getCurrentAttivita();
-        if(!currAtt.getNome().equals(oldAtt.getNome()))
-        {
-            oldAtt.status = Attivita.Status.COMPLETED;
-            if(oldAtt.hasRunningTranche())
-                oldAtt.pauseAttivita();
-            giornataDiProva.refreshOldAttivita(currAtt.getNome());
+        Attivita currentRunningAttivita;
 
-        }
-        switch(currAtt.status)
-        {
-            case PAUSED:currAtt.status = Attivita.Status.RUNNING;
-                currAtt.startAttivita();
-                break;
-            case COMPLETED:
-                currAtt.startAttivita();
-                currAtt.status = Attivita.Status.RUNNING;
-                break;
-            case RUNNING:
-                currAtt.pauseAttivita();
-                currAtt.status = Attivita.Status.PAUSED;
-                break;
-            default:break;
 
-        }
+        //Gestione della vecchia attivita
+        if (giornataDiProva.hasRuningAttivita())
+        {
+            currentRunningAttivita = giornataDiProva.getCurrentRunningActivity();
+            if (!currAtt.getNome().equals(currentRunningAttivita.getNome()))
+            {   //Se il bottone playPause dell'attivita cliccata è un altro rispetto a quello dell'attivita correntemente in esecuzione impila la tranche e lo imposta a completato
+                currentRunningAttivita.pauseAttivita();
+                currentRunningAttivita.status = COMPLETED;
+                currAtt.status = RUNNING;
+                currAtt.startAttivita();
+
+            } else {
+                //Se se il bottone play cliccato corrispode all'attivita corrente
+                switch(currentRunningAttivita.status)
+                {
+                    case PAUSED:
+                        currentRunningAttivita.startAttivita();
+                        currentRunningAttivita.status = RUNNING;
+                        break;
+                    case COMPLETED:
+                        currentRunningAttivita.startAttivita();
+                        currentRunningAttivita.status = RUNNING;
+                        break;
+                    case RUNNING:
+                        currentRunningAttivita.pauseAttivita();
+                        currentRunningAttivita.status = PAUSED;
+                        break;
+                    default:break;
+                }
+            }
+        }else{
+            //Se non ci sono altre attività già in esecuzione starta direttamente  la nuova
+            giornataDiProva.completeAllActivity();
+            currAtt.startAttivita();
+            currAtt.status = RUNNING;
+            }
+
+
         this.giornataAdapter.notifyDataSetChanged();
     }
 
@@ -188,30 +191,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void refreshAll()
     {
-        Date total;
-        //Log.d("Timer:", (new Date())+"");
-
-        total =new Date ((new Date()).getTime() - this.giornataDiProva.getDataDiOggi().getTime());
-        orarioLavorativo.setText(getFormattedString(total));
-
+        this.giornataDiProva.refreshTotalTime();
+        orarioLavorativo.setText(getFormattedString(new Date ((new Date()).getTime() - this.giornataDiProva.getDataDiOggi().getTime())));
         orarioAttivitaTotale.setText(getFormattedString(this.giornataDiProva.getTotalTime()));
-
+        this.giornataAdapter.notifyDataSetChanged();
     }
 
     public static String getFormattedString(Date d)
     {
-        return d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+
+        return String.format("%02d:%02d:%02d", d.getHours(),d.getMinutes(),d.getSeconds());
     }
 
-    class RefreshFieldsTimerTask extends TimerTask {
+    class RefreshFieldsTimerTask extends TimerTask
+    {
         MainActivity context=null;
 
         public RefreshFieldsTimerTask(MainActivity context) {
             this.context = context;
         }
 
+        @Override
         public void run() {
-            context.refreshAll();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    context.refreshAll();
+                }
+            });
         }
     }
 

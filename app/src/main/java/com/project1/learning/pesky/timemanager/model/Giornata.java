@@ -1,7 +1,5 @@
 package com.project1.learning.pesky.timemanager.model;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +32,7 @@ public class Giornata
         long totalTime =0;
         for (Attivita a: this.getAttivita())
         {
-            totalTime+=a.getTempoTotale().getTime();
+            totalTime+=a.getTempoTotaleAttivita().getTime();
         }
         return new Date(totalTime);
     }
@@ -46,8 +44,7 @@ public class Giornata
         {
             if (a.getNome() == nomeAttivita)
             {
-                attivitaEsistente = true;;
-                refreshOldAttivita(nomeAttivita);
+                attivitaEsistente = true;
             }
         }
 
@@ -60,15 +57,54 @@ public class Giornata
 
     }
 
-    public void refreshOldAttivita(String nomeAttivita)
+
+    public void refreshTotalTime()
     {
         for (Attivita a :this.attivita)
         {
-            if (a.getNome() == nomeAttivita)
-            {
-                this.currentAttivita = a;
-            }
+            a.UpdateTempoTotale();
 
+        }
+    }
+
+    public String allAttivitaStatus()
+    {
+        String retString="";
+        for (Attivita a :this.getAttivita())
+        {
+            retString+= a.getNome() +" STATUS:" + a.status.toString()+"\n";
+        }
+
+        return
+                 retString;
+    }
+
+    public boolean hasRuningAttivita()
+    {
+        for (Attivita a :this.getAttivita())
+        {
+            if( a.hasRunningTranche())
+                return true;
+        }
+
+        return false;
+    }
+
+    public Attivita getCurrentRunningActivity()
+    {
+        for (Attivita a :this.getAttivita())
+        {
+            if( a.hasRunningTranche())
+                return a;
+        }
+        return null;
+    }
+
+    public void completeAllActivity()
+    {
+        for (Attivita a :this.getAttivita())
+        {
+            a.status= Attivita.Status.COMPLETED;
         }
     }
 

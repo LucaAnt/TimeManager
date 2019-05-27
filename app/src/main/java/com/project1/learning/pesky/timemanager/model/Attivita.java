@@ -1,6 +1,6 @@
 package com.project1.learning.pesky.timemanager.model;
 
-import java.sql.Time;
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,16 +12,23 @@ public class Attivita {
     private List<Tranche> tranches=null;
     public enum Status  {RUNNING,PAUSED,COMPLETED,};
     public Status status;
+    Date tempoTotaleAttivita;
     private boolean runningTranche;
     public Attivita(String nome) {
         this.Nome = nome;
         status = Status.COMPLETED;
         tranches = new ArrayList<>();
         runningTranche = false;
+        tempoTotaleAttivita = new Date();
     }
 
     public String getNome() {
         return Nome;
+    }
+
+    public Date getTempoTotaleAttivita() {
+        this.UpdateTempoTotale();
+        return tempoTotaleAttivita;
     }
 
     public String getDescrizione() {
@@ -36,9 +43,17 @@ public class Attivita {
         Descrizione = descrizione;
     }
 
+    public boolean setTranche(Date start,Date end,int trancheId)
+    {
+        if(tranches.get(trancheId)!=null)
+        {
+            tranches.set(trancheId,new Tranche(start,end));
+            return  true;
+        }
+        return false;
+    }
 
-
-    public Date getTempoTotale()
+    public void UpdateTempoTotale()
     {
         long totalTime=0;
 
@@ -49,7 +64,8 @@ public class Attivita {
 
         if (this.hasRunningTranche())
             totalTime+= (new Date()).getTime() - currentTranche.getStart().getTime();
-        return new Date(totalTime);
+
+        tempoTotaleAttivita = new Date(totalTime);
     }
 
     public void startAttivita()
@@ -74,10 +90,11 @@ public class Attivita {
         this.status = Status.COMPLETED;
     }
 
+
     @Override
     public String toString()
     {
-        String returnString=this.getNome();
+        String returnString=this.getNome()+"\nSTATUS:"+this.status.toString()+"\n";
         for (Tranche t: this.tranches)
         {
             returnString+="StartTranche :" + t.getStart().toString() + " EndTranche: " + t.getEnd() +"DiffTranche:"+t.getDiffEndStart();
