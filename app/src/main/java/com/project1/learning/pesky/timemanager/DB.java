@@ -1,30 +1,55 @@
 package com.project1.learning.pesky.timemanager;
 
+import android.content.Context;
+import android.util.Log;
 import com.project1.learning.pesky.timemanager.model.AttivitaFavoriti;
 import com.project1.learning.pesky.timemanager.model.Giornata;
+import com.project1.learning.pesky.timemanager.model.Utility;
+import com.project1.learning.pesky.timemanager.persistence.DBHelperUser;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DB
 {
 
     public static ArrayList<AttivitaFavoriti> listaAttivita;
     public static Giornata giornataCorrente;
+    Context mainContext;
+    DBHelperUser dbHelperUser;
 
 
-    public DB()
+
+    public DB(Context context)
     {
+        this.mainContext = context;
+        giornataCorrente = null;
 
-        //Instanzia Attivita di prova
-        listaAttivita = new ArrayList<>();
-        listaAttivita.add(new AttivitaFavoriti("Pausa caffe", true));
-        listaAttivita.add(new AttivitaFavoriti("Meeting", false));
-        listaAttivita.add(new AttivitaFavoriti("Pausa pranzo", false));
-        listaAttivita.add(new AttivitaFavoriti("Assistenza", false));
-        listaAttivita.add(new AttivitaFavoriti("Sviluppo app", true));
-        listaAttivita.add(new AttivitaFavoriti("Sviluppo sito", false));
+        //DBBinding
+        dbHelperUser = new DBHelperUser(mainContext);
+/*
+        dbHelperUser.addActtivitaPreferita("Pausa caffe", true);
+        dbHelperUser.addActtivitaPreferita("Pausa pranzo", true);
+        dbHelperUser.addActtivitaPreferita("Meeting", false);
+        dbHelperUser.addActtivitaPreferita("Assistenza", false);
+        dbHelperUser.addActtivitaPreferita("Sviluppo app", false);
+        dbHelperUser.addActtivitaPreferita("Sviluppo sito", false);
+        dbHelperUser.addActtivitaPreferita("Riunione con Piva", false);
+*/
+        listaAttivita = dbHelperUser.loadAttivittaPreferite();
 
-        //Istanzia la giornata corrente di prova
-        giornataCorrente = new Giornata();
+        Giornata gTmp = new Giornata();
+        //dbHelperUser.storeDay(gTmp);
+
+        giornataCorrente = dbHelperUser.retriveDay(gTmp.getDataDiOggi());
+
+        //Log.d("GIORNO INSERITO", gTmp.getDataDiOggi().toString());
+        Log.d("GIORNO CARICATO", giornataCorrente.getDataDiOggi().toString());
+        //dbHelperUser.retriveDay();
+
+
     }
 }

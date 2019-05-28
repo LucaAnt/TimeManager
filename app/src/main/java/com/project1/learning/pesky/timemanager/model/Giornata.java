@@ -15,6 +15,12 @@ public class Giornata
         dataDiOggi = new Date();
     }
 
+    public  Giornata(Date data)
+    {
+        this.attivita = new ArrayList<Attivita>();
+        dataDiOggi = data;
+    }
+
     public Date getDataDiOggi() {
         return dataDiOggi;
     }

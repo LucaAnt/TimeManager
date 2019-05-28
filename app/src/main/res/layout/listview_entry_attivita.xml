@@ -5,9 +5,9 @@
     android:id="@+id/entryAttivita"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:background="@drawable/border"
     android:descendantFocusability="blocksDescendants"
-    >
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/textViewPallino"
@@ -63,7 +63,7 @@
         android:layout_weight="10"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
-        android:clickable="true"
+        android:clickable="false"
         android:padding="10dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/edit" />

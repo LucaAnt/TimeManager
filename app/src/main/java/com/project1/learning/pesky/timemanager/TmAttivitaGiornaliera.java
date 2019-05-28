@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.project1.learning.pesky.timemanager.list_adapters.GiornataCorrenteAdapter;
 import com.project1.learning.pesky.timemanager.model.Attivita;
-import com.project1.learning.pesky.timemanager.model.Giornata;
+import com.project1.learning.pesky.timemanager.persistence.DBHelperUser;
 
 import java.util.Date;
 import java.util.Timer;
@@ -30,6 +30,7 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
     GiornataCorrenteAdapter giornataAdapter;
     private Timer timer;
     private TextView orarioLavorativo,orarioAttivitaTotale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,7 +38,7 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
         setContentView(R.layout.tm_attivita_giornaliera);
 
         //Test Database
-        DB dbTmp = new DB();
+        DB dbTmp = new DB(getApplicationContext());
 
         //Configura e Imposta la toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -84,7 +85,6 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
         RefreshFieldsTimerTask  refreshTask= new RefreshFieldsTimerTask(this);
 
         timer.scheduleAtFixedRate(refreshTask, 0, 1000);
-
     }
 
     @Override

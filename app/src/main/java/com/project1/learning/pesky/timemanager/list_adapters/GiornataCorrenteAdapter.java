@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.project1.learning.pesky.timemanager.DB;
 import com.project1.learning.pesky.timemanager.TmAttivitaGiornaliera;
 import com.project1.learning.pesky.timemanager.R;
 import com.project1.learning.pesky.timemanager.model.Attivita;
@@ -92,17 +94,22 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
             default:break;
         }
 
-
-
         ImageButton  btnEdit = listItem.findViewById(R.id.AttivitaEntryEdit);
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext,"Click edit on " + position,Toast.LENGTH_LONG).show();
-                attivitaGiornalieraListener.editAttivita(position);
+        if (!DB.giornataCorrente.hasRuningAttivita())
+        {
 
-            }
-        });
+            btnEdit.setClickable(true);
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "Click edit on " + position, Toast.LENGTH_LONG).show();
+                    attivitaGiornalieraListener.editAttivita(position);
+
+                }
+            });
+        }else{
+            btnEdit.setClickable(false);
+        }
 
         ImageButton  btnDelete = listItem.findViewById(R.id.AttivitaEntryDelete);
         btnDelete.setOnClickListener(new View.OnClickListener() {

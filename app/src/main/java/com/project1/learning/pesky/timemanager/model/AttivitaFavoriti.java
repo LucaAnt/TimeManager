@@ -38,4 +38,9 @@ public class AttivitaFavoriti implements Comparable {
         //return this.getNomeAttivita().compareTo(((AttivitaFavoriti) o).getNomeAttivita());
         return Boolean.compare(this.favorito,((AttivitaFavoriti) o).isFavorito());
     }
+
+    @Override
+    public String toString() {
+        return this.nomeAttivita + " " + this.favorito;
+    }
 }

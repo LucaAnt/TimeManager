@@ -43,7 +43,6 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
     // Scatta l'evetno submit quando viene inviata la ricerca
     @Override
     public boolean onQueryTextSubmit(String s) {
-        Log.d("PROVA", "Inviato da activity : " + s);
         return false;
     }
 
@@ -89,14 +88,12 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
             // Scatta l'evetno submit quando viene inviata la ricerca
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d("PROVA", "Inviato : " + s);
                 return false;
             }
 
             // Ogni volta che viene digitato un carattere all'interno dell barra di ricerca scatta questo evento
             @Override
             public boolean onQueryTextChange(String s) {
-                Log.d("PROVA", "Cambiato : " + s);
                 return false;
             }
         };
