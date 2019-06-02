@@ -25,11 +25,15 @@ public class DB
 
     public DB(Context context)
     {
+
         this.mainContext = context;
-        giornataCorrente = null;
+        giornataCorrente = new Giornata();
+        listaAttivita = new ArrayList<>();
+        listaAttivita.add(new AttivitaFavoriti("Riunione con Piva",false));
+        listaAttivita.add(new AttivitaFavoriti("Riunione con Pascolutti",false));
 
         //DBBinding
-        dbHelperUser = new DBHelperUser(mainContext);
+        //dbHelperUser = new DBHelperUser(mainContext);
 /*
         dbHelperUser.addActtivitaPreferita("Pausa caffe", true);
         dbHelperUser.addActtivitaPreferita("Pausa pranzo", true);
@@ -39,15 +43,15 @@ public class DB
         dbHelperUser.addActtivitaPreferita("Sviluppo sito", false);
         dbHelperUser.addActtivitaPreferita("Riunione con Piva", false);
 */
-        listaAttivita = dbHelperUser.loadAttivittaPreferite();
+        //listaAttivita = dbHelperUser.loadAttivittaPreferite();
 
-        Giornata gTmp = new Giornata();
+        //Giornata gTmp = new Giornata();
         //dbHelperUser.storeDay(gTmp);
 
-        giornataCorrente = dbHelperUser.retriveDay(gTmp.getDataDiOggi());
+        //giornataCorrente = dbHelperUser.retriveDay(gTmp.getDataDiOggi());
 
         //Log.d("GIORNO INSERITO", gTmp.getDataDiOggi().toString());
-        Log.d("GIORNO CARICATO", giornataCorrente.getDataDiOggi().toString());
+        //Log.d("GIORNO CARICATO", giornataCorrente.getDataDiOggi().toString());
         //dbHelperUser.retriveDay();
 
 

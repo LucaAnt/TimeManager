@@ -24,7 +24,6 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
     ImageButton  btnPlayPause;
     View listItem;
 
-
     public GiornataCorrenteAdapter(Context context,List<Attivita> list,TmAttivitaGiornalieraAdapterListener attivitaGiornalieraListener)
     {
         super(context, 0 , list);
