@@ -1,14 +1,22 @@
 package com.project1.learning.pesky.timemanager.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+@Entity
 public class Giornata
 {
+    @PrimaryKey(autoGenerate = true)
+    public long id;
+
     private List<Attivita> attivita;
     private Date dataDiOggi;
-    private Attivita currentAttivita = null;
 
     public Giornata() {
         this.attivita = new ArrayList<Attivita>();
@@ -23,10 +31,6 @@ public class Giornata
 
     public Date getDataDiOggi() {
         return dataDiOggi;
-    }
-
-    public Attivita getCurrentAttivita() {
-        return currentAttivita;
     }
 
     public List<Attivita> getAttivita() {
@@ -57,8 +61,8 @@ public class Giornata
 
         if ((!attivitaEsistente))
         {
-                this.currentAttivita = new Attivita(nomeAttivita);
-                attivita.add(currentAttivita);
+                //this.currentAttivita = new Attivita(nomeAttivita);
+                attivita.add(new Attivita(nomeAttivita));
         }
 
     }

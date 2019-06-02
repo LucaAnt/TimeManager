@@ -2,8 +2,8 @@ package com.project1.learning.pesky.timemanager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.project1.learning.pesky.timemanager.list_adapters.GiornataCorrenteAdapter;
 import com.project1.learning.pesky.timemanager.model.Attivita;
-import com.project1.learning.pesky.timemanager.persistence.DBHelperUser;
 
 import java.util.Date;
 import java.util.Timer;
@@ -23,6 +22,7 @@ import java.util.TimerTask;
 import static com.project1.learning.pesky.timemanager.model.Attivita.Status.COMPLETED;
 import static com.project1.learning.pesky.timemanager.model.Attivita.Status.PAUSED;
 import static com.project1.learning.pesky.timemanager.model.Attivita.Status.RUNNING;
+import static com.project1.learning.pesky.timemanager.model.Utility.getFormattedString;
 
 public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, GiornataCorrenteAdapter.TmAttivitaGiornalieraAdapterListener
 {
@@ -217,11 +217,6 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
         this.giornataAdapter.notifyDataSetChanged();
     }
 
-    public static String getFormattedString(Date d)
-    {
-
-        return String.format("%02d:%02d:%02d", d.getHours(),d.getMinutes(),d.getSeconds());
-    }
 
     class RefreshFieldsTimerTask extends TimerTask
     {

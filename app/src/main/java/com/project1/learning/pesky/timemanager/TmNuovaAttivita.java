@@ -1,14 +1,14 @@
 package com.project1.learning.pesky.timemanager;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,10 +16,12 @@ import com.project1.learning.pesky.timemanager.list_adapters.FavoriteAdapter;
 import com.project1.learning.pesky.timemanager.model.AttivitaFavoriti;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener{
 
-    ArrayList<AttivitaFavoriti> array,filtro;
+    List<AttivitaFavoriti> array,filtro;
     ListView listView ;
 
     @Override
@@ -63,7 +65,7 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
         filtro = new ArrayList<>();
         return true;
     }
-    public void renderList(ArrayList<AttivitaFavoriti> l)
+    public void renderList(List<AttivitaFavoriti> l)
     {
         FavoriteAdapter arrayAdapter = new FavoriteAdapter(this,l);
         listView.setAdapter(arrayAdapter);

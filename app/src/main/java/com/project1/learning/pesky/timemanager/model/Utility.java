@@ -16,4 +16,10 @@ public class Utility
         }
         return null;
     }
+
+    public static String getFormattedString(Date d)
+    {
+
+        return String.format("%02d:%02d:%02d", d.getHours(),d.getMinutes(),d.getSeconds());
+    }
 }

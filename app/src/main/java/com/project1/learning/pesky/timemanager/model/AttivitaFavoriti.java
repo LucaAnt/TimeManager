@@ -1,7 +1,14 @@
 package com.project1.learning.pesky.timemanager.model;
 
+
+import androidx.annotation.NonNull;
+import androidx.room.*;
+
+@Entity
 public class AttivitaFavoriti implements Comparable {
 
+    @PrimaryKey
+    @NonNull
     private String nomeAttivita;
     private boolean favorito;
 

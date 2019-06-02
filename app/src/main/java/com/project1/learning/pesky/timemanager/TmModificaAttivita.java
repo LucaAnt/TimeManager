@@ -1,18 +1,16 @@
 package com.project1.learning.pesky.timemanager;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.project1.learning.pesky.timemanager.list_adapters.EditTranchesAdapter;
-import com.project1.learning.pesky.timemanager.model.Attivita;
-import com.project1.learning.pesky.timemanager.model.Giornata;
 
 public class TmModificaAttivita extends AppCompatActivity {
 

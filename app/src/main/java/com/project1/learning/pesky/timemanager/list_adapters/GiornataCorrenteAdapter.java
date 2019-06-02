@@ -15,6 +15,8 @@ import com.project1.learning.pesky.timemanager.R;
 import com.project1.learning.pesky.timemanager.model.Attivita;
 import java.util.List;
 
+import static com.project1.learning.pesky.timemanager.model.Utility.getFormattedString;
+
 
 public class GiornataCorrenteAdapter extends ArrayAdapter
 {
@@ -64,7 +66,7 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
         nomeAttivita.setText(currentAttivita.getNome());
 
         TextView tempoTotaleAttivita = (TextView) listItem.findViewById(R.id.textViewTimer);
-        tempoTotaleAttivita.setText(TmAttivitaGiornaliera.getFormattedString(currentAttivita.getTempoTotaleAttivita()));
+        tempoTotaleAttivita.setText(getFormattedString(currentAttivita.getTempoTotaleAttivita()));
 
 
         //Gestione Bottoni interni

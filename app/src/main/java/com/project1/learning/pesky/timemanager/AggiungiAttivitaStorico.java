@@ -1,7 +1,7 @@
 package com.project1.learning.pesky.timemanager;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.ListView;
 import com.project1.learning.pesky.timemanager.model.AttivitaFavoriti;
 

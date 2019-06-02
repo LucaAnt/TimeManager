@@ -1,18 +1,30 @@
 package com.project1.learning.pesky.timemanager.model;
 
 import android.util.Log;
+
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Attivita {
+    @PrimaryKey(autoGenerate = true)
+    public long id;
     private String Nome="Attività di Defalut";
     private String Descrizione="Lore Ipsum Lore Ipsum Lore Ipsum";
-    private Tranche currentTranche=null;
     private List<Tranche> tranches=null;
-    public enum Status  {RUNNING,PAUSED,COMPLETED,};
-    public Status status;
     Date tempoTotaleAttivita;
+
+    @Ignore
+    private Tranche currentTranche=null;
+    public enum Status  {RUNNING,PAUSED,COMPLETED,};
+    @Ignore
+    public Status status;
+    @Ignore
     private boolean runningTranche;
 
 
@@ -21,7 +33,7 @@ public class Attivita {
         status = Status.COMPLETED;
         tranches = new ArrayList<>();
         runningTranche = false;
-        tempoTotaleAttivita = new Date();
+        tempoTotaleAttivita = new Date(0);
     }
 
     public String getNome() {

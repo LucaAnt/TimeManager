@@ -1,25 +1,21 @@
 package com.project1.learning.pesky.timemanager;
 
 import android.content.Context;
-import android.util.Log;
 import com.project1.learning.pesky.timemanager.model.AttivitaFavoriti;
 import com.project1.learning.pesky.timemanager.model.Giornata;
-import com.project1.learning.pesky.timemanager.model.Utility;
-import com.project1.learning.pesky.timemanager.persistence.DBHelperUser;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.project1.learning.pesky.timemanager.persistencev2.TmDatabaseAccessor;
+import com.project1.learning.pesky.timemanager.persistencev2.TmRoomDb;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class DB
 {
 
-    public static ArrayList<AttivitaFavoriti> listaAttivita;
+    public static List<AttivitaFavoriti> listaAttivita;
+
     public static Giornata giornataCorrente;
     Context mainContext;
-    DBHelperUser dbHelperUser;
 
 
 
@@ -28,12 +24,30 @@ public class DB
 
         this.mainContext = context;
         giornataCorrente = new Giornata();
-        listaAttivita = new ArrayList<>();
-        listaAttivita.add(new AttivitaFavoriti("Riunione con Piva",false));
-        listaAttivita.add(new AttivitaFavoriti("Riunione con Pascolutti",false));
+        TmRoomDb tmdb = TmDatabaseAccessor.getInstance(mainContext);
+        //Test scritturalettura attivita preferite room
+        ArrayList<AttivitaFavoriti> tmp;
+        tmp = new ArrayList<>();
+        tmp.add(new AttivitaFavoriti("Riunione con Piva",false));
+        tmp.add(new AttivitaFavoriti("Riunione con Pascolutti",false));
+        tmp.add(new AttivitaFavoriti("Riunione con Antonio",false));
+        tmdb.AttivitaFavoriteDao().insertAll(tmp);
+        listaAttivita = tmdb.AttivitaFavoriteDao().loadAll();
 
-        //DBBinding
-        //dbHelperUser = new DBHelperUser(mainContext);
+
+
+
+    }
+}
+
+
+
+
+//VECCHI TEST PERSISTENZA CON SQLLite
+//Test scritturalettura tranches room
+
+//DBBinding
+//dbHelperUser = new DBHelperUser(mainContext);
 /*
         dbHelperUser.addActtivitaPreferita("Pausa caffe", true);
         dbHelperUser.addActtivitaPreferita("Pausa pranzo", true);
@@ -43,17 +57,13 @@ public class DB
         dbHelperUser.addActtivitaPreferita("Sviluppo sito", false);
         dbHelperUser.addActtivitaPreferita("Riunione con Piva", false);
 */
-        //listaAttivita = dbHelperUser.loadAttivittaPreferite();
+//listaAttivita = dbHelperUser.loadAttivittaPreferite();
 
-        //Giornata gTmp = new Giornata();
-        //dbHelperUser.storeDay(gTmp);
+//Giornata gTmp = new Giornata();
+//dbHelperUser.storeDay(gTmp);
 
-        //giornataCorrente = dbHelperUser.retriveDay(gTmp.getDataDiOggi());
+//giornataCorrente = dbHelperUser.retriveDay(gTmp.getDataDiOggi());
 
-        //Log.d("GIORNO INSERITO", gTmp.getDataDiOggi().toString());
-        //Log.d("GIORNO CARICATO", giornataCorrente.getDataDiOggi().toString());
-        //dbHelperUser.retriveDay();
-
-
-    }
-}
+//Log.d("GIORNO INSERITO", gTmp.getDataDiOggi().toString());
+//Log.d("GIORNO CARICATO", giornataCorrente.getDataDiOggi().toString());
+//dbHelperUser.retriveDay();

@@ -2,25 +2,22 @@ package com.project1.learning.pesky.timemanager.list_adapters;
 
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.project1.learning.pesky.timemanager.R;
-import com.project1.learning.pesky.timemanager.list_adapters.FavoriteAdapter;
 import com.project1.learning.pesky.timemanager.model.AttivitaFavoriti;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class FavoriteAdapter extends ArrayAdapter<AttivitaFavoriti> {
@@ -30,7 +27,7 @@ public class FavoriteAdapter extends ArrayAdapter<AttivitaFavoriti> {
         FavoriteAdapter me;
         private List<AttivitaFavoriti> favoriteList = new ArrayList<>();
 
-        public FavoriteAdapter( Context context, ArrayList<AttivitaFavoriti> list) {
+        public FavoriteAdapter( Context context, List<AttivitaFavoriti> list) {
             super(context, 0 , list);
             mContext = context;
             favoriteList = list;

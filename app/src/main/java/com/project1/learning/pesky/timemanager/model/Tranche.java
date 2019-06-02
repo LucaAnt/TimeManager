@@ -1,10 +1,14 @@
 package com.project1.learning.pesky.timemanager.model;
-
-
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import java.util.Date;
 import java.util.Random;
 
+@Entity
 public class Tranche {
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
     private Date Start,End,Diff;
     public Tranche() {
         Start = new Date();
@@ -36,7 +40,7 @@ public class Tranche {
         else if(End==null)
             return null;
         Diff = new Date(End.getTime()-Start.getTime());
-        return new Date(End.getTime()-Start.getTime());
+        return Diff;
     }
 
     protected static Tranche getDummyTranche()
@@ -46,5 +50,10 @@ public class Tranche {
         long randomLong = rand.nextLong()%60000;
         t.End = new Date(((new Date()).getTime()+randomLong)-t.Start.getTime());
         return t;
+    }
+
+    @Override
+    public String toString() {
+        return this.getStart()+"\n"+this.getEnd() + "\n" + this.getDiffEndStart();
     }
 }
