@@ -96,7 +96,7 @@ public class GiornataCorrenteAdapter extends ArrayAdapter
         }
 
         ImageButton  btnEdit = listItem.findViewById(R.id.AttivitaEntryEdit);
-        if (!DB.giornataCorrente.hasRuningAttivita())
+        if (!TmAttivitaGiornaliera.giornataCorrente.hasRuningAttivita())
         {
 
             btnEdit.setClickable(true);

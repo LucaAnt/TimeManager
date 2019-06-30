@@ -2,15 +2,16 @@ package com.project1.learning.pesky.timemanager.persistencev2.daos;
 
 import androidx.room.*;
 import com.project1.learning.pesky.timemanager.model.*;
-import java.util.List;
 
 @Dao
-public interface AttivitaFavoriteDao
+public interface GiornataDao
 {
-    @Query("SELECT * FROM attivitafavoriti")
-    List<AttivitaFavoriti> loadAll();
+
+
+    @Query("SELECT * FROM giornate_table WHERE id=:dayString")
+    Giornata loadGiornata(String dayString);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<AttivitaFavoriti> attivitaFavorite);
+    void insert(Giornata giornata);
 
 }

@@ -37,7 +37,7 @@ public class TmModificaAttivita extends AppCompatActivity {
 
 
         // Create an ArrayAdapter from List
-        arrayAdapter = new EditTranchesAdapter(this, R.layout.row_modifica, DB.giornataCorrente.getAttivita().get(idAttivita).getTranches());
+        arrayAdapter = new EditTranchesAdapter(this, R.layout.row_modifica, TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(idAttivita).getTranches());
 
         // DataBind ListView with items from ArrayAdapter
         lv.setAdapter(arrayAdapter);
@@ -47,7 +47,7 @@ public class TmModificaAttivita extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Aggiungo una tranche alla attività selezionata, ho modificato il model di attivita il metodo addDummyTranches
-                DB.giornataCorrente.getAttivita().get(idAttivita).addManualTranche();
+                TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(idAttivita).addManualTranche();
                 arrayAdapter.notifyDataSetChanged();
             }
 

@@ -1,40 +1,36 @@
 package com.project1.learning.pesky.timemanager.model;
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
+import androidx.annotation.NonNull;
+import androidx.room.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
-@Entity
+@Entity(tableName = "giornate_table")
 public class Giornata
 {
-    @PrimaryKey(autoGenerate = true)
-    public long id;
+    @PrimaryKey
+    @NonNull
+    private String id;
 
+    @Ignore
     private List<Attivita> attivita;
+
     private Date dataDiOggi;
+
 
     public Giornata() {
         this.attivita = new ArrayList<Attivita>();
         dataDiOggi = new Date();
+        this.id = getTodayStringId();
     }
 
     public  Giornata(Date data)
     {
         this.attivita = new ArrayList<Attivita>();
         dataDiOggi = data;
-    }
-
-    public Date getDataDiOggi() {
-        return dataDiOggi;
-    }
-
-    public List<Attivita> getAttivita() {
-        return attivita;
+        this.id = getTodayStringId();
     }
 
     public Date getTotalTime()
@@ -52,7 +48,7 @@ public class Giornata
         boolean attivitaEsistente=false;
         for (Attivita a :this.attivita)
         {
-            if (a.getNome() == nomeAttivita)
+            if (a.getNome().equals(nomeAttivita))
             {
                 attivitaEsistente = true;
             }
@@ -62,7 +58,7 @@ public class Giornata
         if ((!attivitaEsistente))
         {
                 //this.currentAttivita = new Attivita(nomeAttivita);
-                attivita.add(new Attivita(nomeAttivita));
+                attivita.add(new Attivita(nomeAttivita,getId()));
         }
 
     }
@@ -118,4 +114,38 @@ public class Giornata
         }
     }
 
+
+    //GETTER & SETTERS & OVERRIDES
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Attivita> getAttivita() {
+        return attivita;
+    }
+
+    public Date getDataDiOggi() {
+        return dataDiOggi;
+    }
+
+    public void setAttivita(List<Attivita> attivita) {
+        this.attivita = attivita;
+    }
+
+    public void setDataDiOggi(Date dataDiOggi) {
+        this.dataDiOggi = dataDiOggi;
+    }
+
+
+
+    private String getTodayStringId()
+    {
+        return Utility.getStringData(getDataDiOggi());
+    }
 }

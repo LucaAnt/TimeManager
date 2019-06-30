@@ -37,7 +37,7 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
         listView.setOnItemClickListener(this);
 
         filtro = new ArrayList<>();
-        renderList(DB.listaAttivita);
+        renderList(TmAttivitaGiornaliera.attivita);
     }
 
     // I due eventi di seguito possono essere tolti ed usati solo all'interno di un metodo
@@ -53,9 +53,9 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
     public boolean onQueryTextChange(String s)
     {
         if (s=="")
-            filtro = DB.listaAttivita;
+            filtro = TmAttivitaGiornaliera.attivita;
 
-        for(AttivitaFavoriti el:DB.listaAttivita)
+        for(AttivitaFavoriti el:TmAttivitaGiornaliera.attivita)
         {
             if(el.getNomeAttivita().contains(s))
                 filtro.add(el);
@@ -125,7 +125,7 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // Recupero l'attività selezionata
         Intent intent = new Intent(this, TmAttivitaGiornaliera.class);
-        intent.putExtra(CostantiAttivita.STR_NEW_ATTIVITA, DB.listaAttivita.get(position).getNomeAttivita());
+        intent.putExtra(CostantiAttivita.STR_NEW_ATTIVITA, TmAttivitaGiornaliera.attivita.get(position).getNomeAttivita());
         startActivity(intent);
         finish();
 
