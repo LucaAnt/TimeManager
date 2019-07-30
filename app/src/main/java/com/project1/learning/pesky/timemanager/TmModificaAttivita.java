@@ -1,15 +1,14 @@
 package com.project1.learning.pesky.timemanager;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project1.learning.pesky.timemanager.list_adapters.EditTranchesAdapter;
 
 public class TmModificaAttivita extends AppCompatActivity {
@@ -23,13 +22,15 @@ public class TmModificaAttivita extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_attivita);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Modifica attività");
-        idAttivita = getIntent().getIntExtra(CostantiAttivita.INT_ID_ATTIVITA_DA_MODIFICARE,0);
 
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Modifica attività");
+        setSupportActionBar(toolbar);
+
+        idAttivita =(int) getIntent().getIntExtra(CostantiAttivita.INT_ID_ATTIVITA_DA_MODIFICARE,0);
 
         note = (EditText)findViewById(R.id.noteText);
+        note.setText(TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(this.idAttivita).getDescrizione());
 
         // Get reference of widgets from XML layout
          ListView lv = (ListView) findViewById(R.id.listViewModifica);
@@ -58,12 +59,8 @@ public class TmModificaAttivita extends AppCompatActivity {
     // Salvataggio delle modifiche e passo l'attività modificata
 
     public void onClickModifica(View v) {
-        // Chiama l'activity Classifica
-        //Intent intent = new Intent(this, SecondaActivity.class);
-        //intent.putExtra("messaggio1", messaggio1);
-        //startActivity(intent);
-
         // Recupero le note dell'attività
-        String noteAttivita = note.getText().toString();
+        TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(this.idAttivita).setDescrizione(note.getText().toString());
+        finish();
     }
 }

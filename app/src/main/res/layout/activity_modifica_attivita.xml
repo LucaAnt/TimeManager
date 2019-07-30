@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".TmNuovaAttivita">
 
-    <androidx.appcompat.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="413dp"
         android:layout_height="52dp"
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Note"
-        android:textSize="15dp"
+        android:textSize="18dp"
         android:textColor="@android:color/background_dark"
         android:layout_gravity="center"/>
 
@@ -102,11 +102,11 @@
         android:paddingBottom="15dp"
         android:paddingLeft="15dp"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,9 +117,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="#B0ECE7"/>
+            android:backgroundTint="#B0ECE7"
+            android:onClick="onClickModifica"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,7 +133,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.ConstraintLayout>
 
 
 </LinearLayout>

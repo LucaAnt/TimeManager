@@ -1,5 +1,7 @@
 package com.project1.learning.pesky.timemanager.model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.*;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class Giornata
     public Giornata() {
         this.attivita = new ArrayList<Attivita>();
         dataDiOggi = new Date();
+        Log.d("Giornata: ",dataDiOggi.toString());
         this.id = getTodayStringId();
     }
 

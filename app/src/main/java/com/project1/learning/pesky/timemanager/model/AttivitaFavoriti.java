@@ -38,7 +38,6 @@ public class AttivitaFavoriti implements Comparable {
         this.favorito = favorito;
     }
 
-
     // Serve per la gestione dei preferiti
     @Override
     public int compareTo(Object o) {

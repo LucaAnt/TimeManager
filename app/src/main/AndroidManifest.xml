@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project1.learning.pesky.timemanager"
-    >
+    package="com.project1.learning.pesky.timemanager">
 
     <application
         android:allowBackup="true"
@@ -11,21 +10,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity
-            android:name=".TmAttivitaGiornaliera"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
+        <activity android:name=".TmLogin"
+            android:launchMode="standard"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TmAttivitaGiornaliera"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".TmNuovaAttivita" />
+        <activity android:name=".AggiungiAttivitaStorico" />
+        <activity android:name=".TmModificaAttivita" />
+        <activity android:name=".TmCalendarPick" android:parentActivityName=".TmAttivitaGiornaliera"></activity>
 
-        <activity android:name=".TmNuovaAttivita"></activity>
-        <activity android:name=".AggiungiAttivitaStorico"></activity>
-        <activity android:name=".TmModificaAttivita"></activity>
-        <activity android:name=".DettagliAttivitaTm"></activity>
     </application>
 
 </manifest>

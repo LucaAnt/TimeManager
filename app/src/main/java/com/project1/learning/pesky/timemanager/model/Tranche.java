@@ -1,11 +1,17 @@
 package com.project1.learning.pesky.timemanager.model;
+import android.util.Log;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
+import java.util.TimeZone;
 
 @Entity(foreignKeys = @ForeignKey(entity = Attivita.class,
         parentColumns = "id",
@@ -51,7 +57,20 @@ public class Tranche {
 
     public Date getDiffEndStart()
     {
-        Diff = new Date(End.getTime()-Start.getTime());
+
+
+        //Diff.setTime(End.getTime()-Start.getTime());
+
+        Calendar calendarStart = Calendar.getInstance();
+        Calendar calendarEnd = Calendar.getInstance();
+        Calendar calendarDiff = Calendar.getInstance();
+        calendarStart.setTime(Start);
+        calendarEnd.setTime(End);
+
+        calendarDiff.setTimeInMillis(calendarEnd.getTimeInMillis() - calendarStart.getTimeInMillis());
+        calendarDiff.setTimeZone(TimeZone.getDefault());
+        Diff  = calendarDiff.getTime();
+
         return Diff;
     }
 

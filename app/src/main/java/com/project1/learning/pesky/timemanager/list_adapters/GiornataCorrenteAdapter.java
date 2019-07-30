@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project1.learning.pesky.timemanager.DB;
 import com.project1.learning.pesky.timemanager.TmAttivitaGiornaliera;
 import com.project1.learning.pesky.timemanager.R;
 import com.project1.learning.pesky.timemanager.model.Attivita;

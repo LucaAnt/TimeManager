@@ -1,14 +1,14 @@
 package com.project1.learning.pesky.timemanager;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,7 +16,6 @@ import com.project1.learning.pesky.timemanager.list_adapters.FavoriteAdapter;
 import com.project1.learning.pesky.timemanager.model.AttivitaFavoriti;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener{
@@ -35,7 +34,6 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
 
         listView = (ListView)findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
-
         filtro = new ArrayList<>();
         renderList(TmAttivitaGiornaliera.attivita);
     }
@@ -45,6 +43,7 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
     // Scatta l'evetno submit quando viene inviata la ricerca
     @Override
     public boolean onQueryTextSubmit(String s) {
+        Log.d("PROVA", "Inviato da activity : " + s);
         return false;
     }
 
@@ -84,18 +83,20 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
         final SearchView searchView = (SearchView) searchItem.getActionView();
 
         // Inizializzo un Listener richiamando l'interfaccia (interface) OnQueryTeextListener che contiene due metodi
-        // dell'interfaccia che sono due eventi
+        // dell'interfaccia che sono due eventi 
         SearchView.OnQueryTextListener mioListener = new SearchView.OnQueryTextListener() {
 
             // Scatta l'evetno submit quando viene inviata la ricerca
             @Override
             public boolean onQueryTextSubmit(String s) {
+                Log.d("PROVA", "Inviato : " + s);
                 return false;
             }
 
             // Ogni volta che viene digitato un carattere all'interno dell barra di ricerca scatta questo evento
             @Override
             public boolean onQueryTextChange(String s) {
+                Log.d("PROVA", "Cambiato : " + s);
                 return false;
             }
         };

@@ -71,8 +71,11 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
 
 
         TmAttivitaGiornaliera.attivita = this.roomDbAccessor.loadAllActivities();
-        //TmAttivitaGiornaliera.attivita.add(new AttivitaFavoriti("Riunione con piva",false));
-
+        /*
+        TmAttivitaGiornaliera.attivita.add(new AttivitaFavoriti("Riunione con piva",false));
+        TmAttivitaGiornaliera.attivita.add(new AttivitaFavoriti("Riunione con Zorzetto",false));
+        TmAttivitaGiornaliera.attivita.add(new AttivitaFavoriti("Riunione con zaza",false));
+        */
         //Imposta l'adapter della list view per le entry delle attivita
         ListView listView = findViewById(R.id.ListViewAttivita);
         giornataAdapter = new GiornataCorrenteAdapter(this, this.giornataCorrente.getAttivita(),this);
@@ -118,6 +121,8 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
         {
             case R.id.action_calendar:
                 Toast.makeText(this,"Click Calendar",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this,TmCalendarPick.class);
+                startActivity(intent);
                 break;
             case R.id.action_logout:
                 Toast.makeText(this,"Click Logout",Toast.LENGTH_LONG).show();
@@ -222,7 +227,6 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
         this.giornataCorrente.refreshTotalTime();
         orarioLavorativo.setText(getFormattedString(new Date ((new Date()).getTime() - this.giornataCorrente.getDataDiOggi().getTime())));
         orarioAttivitaTotale.setText(getFormattedString(this.giornataCorrente.getTotalTime()));
-        Log.d("DATE:", this.giornataCorrente.getTotalTime()+"");
         this.giornataAdapter.notifyDataSetChanged();
     }
 

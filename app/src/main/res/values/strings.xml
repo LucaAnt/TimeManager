@@ -2,5 +2,11 @@
     <string name="app_name">TimeManager</string>
     <string name="action_settings">Settings</string>
     <string name="attivitagiornalieratitolo">Attivita Giornaliera</string>
+    <string name="calendariogiornatetitolo">Calendario Giornate</string>
     <string name="pallino">●</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_username">Username</string>
+    <string name="action_sign_in_short">Log in</string>
+    <string name="action_sign_in">Log in</string>
+
 </resources>

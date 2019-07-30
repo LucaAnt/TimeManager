@@ -4,7 +4,6 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.widget.ListView;
 import com.project1.learning.pesky.timemanager.model.AttivitaFavoriti;
-
 import java.util.ArrayList;
 
 public class AggiungiAttivitaStorico extends TmNuovaAttivita {
