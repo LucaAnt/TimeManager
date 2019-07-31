@@ -30,6 +30,7 @@ public class TmDettagliAttivita extends AppCompatActivity {
         ListView lv = findViewById(R.id.listViewModifica);
 
         TextView tempoTotale = (TextView) findViewById(R.id.tempoTotale);
+        idAttivita = getIntent().getIntExtra(CostantiAttivita.INT_ID_ATTIVITA_DA_MODIFICARE,0);
 
         // Estrapolo dalla stringa della data recuperata solo il tempo e setto la TextView del tempototale
         tempoTotale.setText(Utility.getFormattedString( TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(this.idAttivita).getTempoTotaleAttivita()));
@@ -37,7 +38,7 @@ public class TmDettagliAttivita extends AppCompatActivity {
         TextView descrizione = (TextView) findViewById(R.id.descrizioneAttivita);
         descrizione.setText(TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(this.idAttivita).getDescrizione());
 
-        idAttivita = getIntent().getIntExtra(CostantiAttivita.INT_ID_ATTIVITA_DA_MODIFICARE,0);
+
 
         Log.d("ITEM:", idAttivita +"");
         // Get reference of widgets from XML layout

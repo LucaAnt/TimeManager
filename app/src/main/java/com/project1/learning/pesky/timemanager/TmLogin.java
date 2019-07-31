@@ -57,10 +57,6 @@ public class TmLogin extends AppCompatActivity implements View.OnClickListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-
-
                 // se username e password rispondono al pattern che decidiamo a priori, allora:
                 // abilitiamo il pulsante Login/Accedi
                 if  ((!usernameEditText.getText().toString().equals("")) &&
