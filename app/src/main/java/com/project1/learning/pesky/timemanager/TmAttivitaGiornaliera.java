@@ -24,6 +24,7 @@ import com.project1.learning.pesky.timemanager.persistencev2.TmRoomDb;
 
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -116,16 +117,18 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        Intent intent;
         switch (id)
         {
             case R.id.action_calendar:
-                Toast.makeText(this,"Click Calendar",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this,TmCalendarPick.class);
+                Toast.makeText(this,"Calendar",Toast.LENGTH_LONG).show();
+                intent = new Intent(this,TmCalendarPick.class);
                 startActivity(intent);
                 break;
             case R.id.action_logout:
-                Toast.makeText(this,"Click Logout",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Logging out",Toast.LENGTH_LONG).show();
+                intent = new Intent(this,TmLogin.class);
+                startActivity(intent);
                 this.finish();
                 break;
         }
@@ -152,8 +155,9 @@ public class TmAttivitaGiornaliera extends AppCompatActivity implements View.OnC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-
-        Toast.makeText(this,"Click Entry "+ position,Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,TmDettagliAttivita.class);
+        intent.putExtra(CostantiAttivita.INT_ID_ATTIVITA_DA_MODIFICARE,position);
+        startActivity(intent);
     }
 
 

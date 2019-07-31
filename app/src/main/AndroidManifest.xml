@@ -28,6 +28,7 @@
         <activity android:name=".TmNuovaAttivita" />
         <activity android:name=".AggiungiAttivitaStorico" />
         <activity android:name=".TmModificaAttivita" />
+        <activity android:name=".TmDettagliAttivita" />
         <activity android:name=".TmCalendarPick" android:parentActivityName=".TmAttivitaGiornaliera"></activity>
 
     </application>

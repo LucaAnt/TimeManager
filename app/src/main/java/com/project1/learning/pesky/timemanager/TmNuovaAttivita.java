@@ -6,23 +6,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project1.learning.pesky.timemanager.list_adapters.FavoriteAdapter;
 import com.project1.learning.pesky.timemanager.model.AttivitaFavoriti;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener{
+public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener, View.OnClickListener {
 
     List<AttivitaFavoriti> array,filtro;
     ListView listView ;
-
+    EditText textViewNewFavActivity;
+    FloatingActionButton addFavButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,10 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
         listView.setOnItemClickListener(this);
         filtro = new ArrayList<>();
         renderList(TmAttivitaGiornaliera.attivita);
+
+        textViewNewFavActivity = findViewById(R.id.newFavActivityEditText);
+        addFavButton = findViewById(R.id.saveFavButton);
+        addFavButton.setOnClickListener(this);
     }
 
     // I due eventi di seguito possono essere tolti ed usati solo all'interno di un metodo
@@ -132,6 +140,9 @@ public class TmNuovaAttivita extends AppCompatActivity implements SearchView.OnQ
 
     }
 
-
-
+    @Override
+    public void onClick(View v)
+    {
+        TmAttivitaGiornaliera.attivita.add(new AttivitaFavoriti(textViewNewFavActivity.getText().toString(),false));
+    }
 }

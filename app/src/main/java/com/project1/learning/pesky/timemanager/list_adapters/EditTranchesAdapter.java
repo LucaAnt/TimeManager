@@ -12,7 +12,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.project1.learning.pesky.timemanager.R;
+import com.project1.learning.pesky.timemanager.TmAttivitaGiornaliera;
 import com.project1.learning.pesky.timemanager.model.Tranche;
+import com.project1.learning.pesky.timemanager.model.Utility;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,16 +23,19 @@ import java.util.List;
 
 public class EditTranchesAdapter extends ArrayAdapter {
     Context context;
-    List<Tranche> toDisplayTranche;
     int layoutRes;
+    List<Tranche> trancheList;
+    int attivitaId=0;
 
 
-    public EditTranchesAdapter(Context context, int resource,List<Tranche> list) {
-        super(context, resource, list);
-
+    public EditTranchesAdapter(Context context, int resource, List<Tranche> trancheList,int attivitaId)
+    {
+        super(context, resource,trancheList);
         this.context = context;
         this.layoutRes = resource;
-        this.toDisplayTranche = list;
+        this.trancheList = trancheList;
+        this.attivitaId=attivitaId;
+
     }
 
     @Override
@@ -40,20 +46,19 @@ public class EditTranchesAdapter extends ArrayAdapter {
             if(listItem == null)
                 listItem = LayoutInflater.from(context).inflate(R.layout.row_modifica,parent,false);
 
-        Tranche currentTranche = this.toDisplayTranche.get(position);
+        Tranche currentTranche = trancheList.get(position);
 
         //Imposta le Views
         final EditText start = listItem.findViewById(R.id.textViewList1);
 
-        start.setText(currentTranche.getStart().getHours() +":" +currentTranche.getStart().getMinutes()+":" +currentTranche.getStart().getSeconds());
+        start.setText(Utility.getFormattedString(currentTranche.getStart()));
 
         final EditText end= listItem.findViewById(R.id.textViewList2);
 
-        end.setText(currentTranche.getEnd().getHours() +":" +currentTranche.getEnd().getMinutes()+":" +currentTranche.getEnd().getSeconds());
+        end.setText(Utility.getFormattedString(currentTranche.getEnd()));
 
         TextView tranceDiff= listItem.findViewById(R.id.textViewList3);
-        Log.d("DIFF", currentTranche.getDiffEndStart().getHours() +":" +currentTranche.getDiffEndStart().getMinutes()+":" +currentTranche.getDiffEndStart().getSeconds());
-        tranceDiff.setText(currentTranche.getDiffEndStart().getHours() +":" +currentTranche.getDiffEndStart().getMinutes()+":" +currentTranche.getDiffEndStart().getSeconds());
+        tranceDiff.setText(Utility.getFormattedString(currentTranche.getDiffEndStart()));
 
         ImageButton modifica = (ImageButton)listItem.findViewById(R.id.imageButton);
         modifica.setOnClickListener(new View.OnClickListener() {
@@ -61,16 +66,17 @@ public class EditTranchesAdapter extends ArrayAdapter {
             public void onClick(View v) {
                 String start1 = start.getText().toString();
                 String end1 = end.getText().toString();
-                Date date1= null;
-                Date date2= null;
+                Date start= null;
+                Date end= null;
                 try {
-                    date1 = new SimpleDateFormat("HH:mm:ss").parse(start1);
-                    date2 = new SimpleDateFormat("HH:mm:ss").parse(end1);
+                    start = new SimpleDateFormat("HH:mm:ss").parse(start1);
+                    end = new SimpleDateFormat("HH:mm:ss").parse(end1);
+                    trancheList.set(position,new Tranche(start,end,TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(attivitaId).getId()));
+                    //TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(attivitaId).getTranches().set(position,new Tranche(start,end,TmAttivitaGiornaliera.giornataCorrente.getAttivita().get(attivitaId).getId()));
 
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                Log.d("PROVA", "onClick: " + date1 + " - " + date2);
             }
         });
 

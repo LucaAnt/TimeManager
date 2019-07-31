@@ -34,10 +34,12 @@ public class Tranche {
 
     //CONSTRUCTORS
     public Tranche(String parentAttivita) {
+
         Start = new Date();
         End = new Date();
         this.getDiffEndStart();
         setAttivita_id(parentAttivita);
+        Log.d("Tranche: ", this.toString());
     }
 
     public Tranche(Date Start,Date End,String attivita_id)
@@ -46,6 +48,13 @@ public class Tranche {
         this.End = End;
         this.setDiff(getDiffEndStart());
         setAttivita_id(attivita_id);
+    }
+
+    public Tranche(Date start, Date end)
+    {
+        this.Start = start;
+        this.End = end;
+        getDiffEndStart();
     }
 
 
@@ -61,6 +70,7 @@ public class Tranche {
 
         //Diff.setTime(End.getTime()-Start.getTime());
 
+        /*
         Calendar calendarStart = Calendar.getInstance();
         Calendar calendarEnd = Calendar.getInstance();
         Calendar calendarDiff = Calendar.getInstance();
@@ -68,22 +78,13 @@ public class Tranche {
         calendarEnd.setTime(End);
 
         calendarDiff.setTimeInMillis(calendarEnd.getTimeInMillis() - calendarStart.getTimeInMillis());
-        calendarDiff.setTimeZone(TimeZone.getDefault());
+        calendarDiff.setTimeZone(TimeZone.getTimeZone("\"Europe//Berlin\""));
         Diff  = calendarDiff.getTime();
-
+        */
+         Diff = new Date();
+         Diff.setTime(this.End.getTime() - this.Start.getTime());
         return Diff;
     }
-
-    protected static Tranche getDummyTranche(String AttivitaRef)
-    {
-        Tranche t = new Tranche("0000-00-00");
-        Random rand = new Random();
-        long randomLong = rand.nextLong()%60000;
-        t.End = new Date(((new Date()).getTime()+randomLong)-t.Start.getTime());
-        t.setAttivita_id(AttivitaRef);
-        return t;
-    }
-
 
 
     //GETTER & SETTERS & OVERRIDES

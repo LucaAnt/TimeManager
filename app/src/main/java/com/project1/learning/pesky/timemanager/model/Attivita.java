@@ -112,14 +112,6 @@ public class Attivita {
         runningTranche = false;
     }
 
-    public void addDummyTranches()
-    {
-        tranches.add(Tranche.getDummyTranche(this.getId()));
-        tranches.add(Tranche.getDummyTranche(this.getId()));
-        tranches.add(Tranche.getDummyTranche(this.getId()));
-        tranches.add(Tranche.getDummyTranche(this.getId()));
-        this.status = Status.COMPLETED;
-    }
 
     public void addManualTranche()
     {
